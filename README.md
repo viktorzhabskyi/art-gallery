@@ -18,25 +18,21 @@ The platform utilizes PostgreSQL for database management and Redis for caching, 
 
 ## File Structure
 
-### 1. **Diagram**
-- **diagram.png**: A visual representation of the system's architecture or workflow.
-
-
-### 2. **Backend (RDS)**
+### 1. **Backend (RDS)**
 - **Purpose**: Manages application logic and integrates with a relational database service.
 - **Files**:
   - `manage.py`: Entry point for the backend application.
   - `requirements.txt`: Lists dependencies for the project.
   - `backend_rds/`: Contains the core backend logic, configuration files, and routes for the application.
 
-### 3. **Backend (Redis)**
+### 2. **Backend (Redis)**
 - **Purpose**: Handles backend logic with Redis for caching.
 - **Files**:
   - `manage.py`: Entry point for the backend application.
   - `requirements.txt`: Lists dependencies for the project.
   - `backend_redis/`: Contains the core backend logic, configuration files, and routes for the application.
 
-### 4. **Frontend**
+### 3. **Frontend**
 - **Purpose**: Provides the user interface.
 - **Files**:
   - `manage.py`: Entry point for the frontend application.
