@@ -72,16 +72,19 @@ Your main task is not just to implement the project but to learn how to break do
    Ensure each `Dockerfile` is properly configured to build and run its respective service.
 
 3. **Step 3: Creating docker-compose.yml and Environment Variables**
-   - Write a `docker-compose.yml` file to define how the services interact and to simplify the orchestration process.
+    
+    Write a `docker-compose.yml` file to define how the services interact and to simplify the orchestration process.
 
 4. **Step 4: Building and Running Services**
-   - Build and start all services using Docker Compose with the `--build` option to rebuild images:
+  
+    Build and start all services using Docker Compose with the `--build` option to rebuild images:
      ```bash
      docker-compose up -d --build
      ```
 
 5. **Step 5: Monitoring Logs**
-   To troubleshoot issues and monitor logs for each service:
+  
+    To troubleshoot issues and monitor logs for each service:
    - View logs for all services:
      ```bash
      docker-compose logs -f
@@ -93,10 +96,11 @@ Your main task is not just to implement the project but to learn how to break do
    - Stop monitoring logs by pressing `Ctrl+C`.
 
 6. **Step 6: Stopping Services**
-   To stop all running services:
-   ```bash
-   docker-compose down
-   ```
+
+    To stop all running services:
+    ```bash
+    docker-compose down
+    ```
 
 
 ## Deployment
