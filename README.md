@@ -60,7 +60,7 @@ Your main task is not just to implement the project but to learn how to break do
    Clone the repository to your local machine and navigate to the project directory:
    ```bash
    git clone https://github.com/THE-GAME-DEVOPS/art-gallery.git
-   cd project
+   cd art-gallery
    ```
 
 2. **Step 2: Writing Dockerfiles for Services**
