@@ -53,26 +53,49 @@ Next, use it when taking courses to find the information you need for the projec
 Refer back to the course we took initially (about ChatGPT), recall the methods and strategies of prompts, and use them.
 Your main task is not just to implement the project but to learn how to break down new information into the simplest pieces with ChatGPT and build understanding as quickly as possible.
 
+## Steps to Dockerize the Code
 
+1. **Step 1: Cloning the Repository**
 
-## Installation
-
-1. Clone the repository:
+   Clone the repository to your local machine and navigate to the project directory:
    ```bash
-   git clone <repository_url>
+   git clone https://github.com/THE-GAME-DEVOPS/art-gallery.git
    cd project
    ```
 
-2. Navigate to each directory and install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
+2. **Step 2: Writing Dockerfiles for Services**
 
-3. Set up environment variables for database and application configuration. You can look up these variables in `settings.py`.
+   Write a `Dockerfile` for each service, including:
+   - Backend RDS
+   - Backend Redis
+   - Frontend
+   Ensure each `Dockerfile` is properly configured to build and run its respective service.
 
-4. Start the server:
+3. **Step 3: Creating docker-compose.yml and Environment Variables**
+   - Write a `docker-compose.yml` file to define how the services interact and to simplify the orchestration process.
+
+4. **Step 4: Building and Running Services**
+   - Build and start all services using Docker Compose with the `--build` option to rebuild images:
+     ```bash
+     docker-compose up -d --build
+     ```
+
+5. **Step 5: Monitoring Logs**
+   To troubleshoot issues and monitor logs for each service:
+   - View logs for all services:
+     ```bash
+     docker-compose logs -f
+     ```
+   - View logs for a specific service (e.g., backend-rds):
+     ```bash
+     docker-compose logs -f backend-rds
+     ```
+   - Stop monitoring logs by pressing `Ctrl+C`.
+
+6. **Step 6: Stopping Services**
+   To stop all running services:
    ```bash
-   python ./manage.py runserver 0.0.0.0:8000
+   docker-compose down
    ```
 
 
