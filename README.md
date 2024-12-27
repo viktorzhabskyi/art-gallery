@@ -2,7 +2,6 @@
 
 This project focuses on developing a scalable online platform for virtual art galleries. The application integrates a reliable backend and a dynamic frontend. The backend manages user authentication, gallery curation, and artwork transactions, while the frontend provides a seamless and immersive user experience for exploring art collections. Additionally, caching mechanisms are employed to enhance performance, ensuring a robust and efficient user experience.
 
----
 
 # Project Overview
 
@@ -14,7 +13,6 @@ This project is structured into three primary components: backend services (RDS 
 
 The platform utilizes PostgreSQL for database management and Redis for caching, ensuring optimal performance.
 
----
 
 ## File Structure
 
@@ -43,7 +41,6 @@ The platform utilizes PostgreSQL for database management and Redis for caching, 
   - `requirements.txt`: Lists frontend dependencies.
   - `frontend/`: Contains configuration files, routing, views, and templates for the frontend interface.
 
----
 
 ## Lifehacks
 
@@ -59,7 +56,6 @@ Refer back to the course we took initially (about ChatGPT), recall the methods a
 Your main task is not just to implement the project but to learn how to break down new information into the simplest pieces with ChatGPT and build understanding as quickly as possible.
 
 
----
 
 ## Installation
 
@@ -81,7 +77,6 @@ Your main task is not just to implement the project but to learn how to break do
    python ./manage.py runserver 0.0.0.0:8000
    ```
 
----
 
 ## Deployment
 
