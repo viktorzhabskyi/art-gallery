@@ -13,6 +13,8 @@ This project is structured into three primary components: backend services (RDS 
 
 The platform utilizes PostgreSQL for database management and Redis for caching, ensuring optimal performance.
 
+### Diagram
+![Architecture Diagram](diagram.png)
 
 ## File Structure
 
