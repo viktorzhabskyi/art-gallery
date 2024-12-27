@@ -69,7 +69,8 @@ Your main task is not just to implement the project but to learn how to break do
    - Backend RDS
    - Backend Redis
    - Frontend
-   Ensure each `Dockerfile` is properly configured to build and run its respective service.
+  
+    Ensure each `Dockerfile` is properly configured to build and run its respective service.
 
 3. **Step 3: Creating docker-compose.yml and Environment Variables**
     
