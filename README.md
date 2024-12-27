@@ -30,7 +30,7 @@ The platform utilizes PostgreSQL for database management and Redis for caching, 
 - **Files**:
   - `manage.py`: Entry point for the backend application.
   - `requirements.txt`: Lists dependencies for the project.
-  - `backend_redis/`: Contains the core backend logic, configuration files, and routes for the application.
+  - `backend_redis/`: Contains the core backend logic, configuration files, and routes for the application. 
 
 ### 3. **Frontend**
 - **Purpose**: Provides the user interface.
@@ -77,6 +77,8 @@ Your main task is not just to implement the project but to learn how to break do
 
 
 ## Deployment
+
+**Important:** Do not modify the code. The code is written correctly, and your task is to deploy it to fulfill the project requirements. Therefore, there is no need to add or rewrite code as it is already functional.
 
 ### Backend Services
 - Deploy the backend (backend_rds, backend_redis) services using ECS as specified in the architecture diagram.
