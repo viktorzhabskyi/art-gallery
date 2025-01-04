@@ -129,13 +129,13 @@ docker-compose down
 
 ## AWS Deployment
 
-### Step 1: Deploying the Basic Architecture
+### Step 1: Deploying the Frontend
 
 ![Architecture Diagram Step 1](docs/assets/diagram-step1.png)
 
-In the first step, deploy the application with a simple setup:
+In the first step, deploy the frontend application with a simple setup:
 
-- Launch an ECS cluster in a **private subnet** for hosting the application backend.
+- Launch an ECS cluster in a **private subnet** for hosting the frontend service.
 - Use **Amazon ECR** for managing container images.
 - Upload the docker-compose.yml file to the ECS instances to define services and pull images from ECR.
 
@@ -145,15 +145,16 @@ In the first step, deploy the application with a simple setup:
 
 In the second step, enhance scalability and availability:
 
-- Add an **Application Load Balancer (ALB)** in the **public subnet** to distribute traffic.
+- Add an **Application Load Balancer (ALB)** in the **public subnet** to distribute traffic to the frontend service.
 
-### Step 3: Incorporating Databases and Caching
+### Step 3: Incorporating Backend Services
 
 ![Architecture Diagram Step 3](docs/assets/diagram-step3.png)
 
-In the final step, integrate data storage and caching:
+In the final step, integrate data storage and backend functionality:
 
-- Deploy **RDS** and **ElastiCache (Redis)** in a **private subnet** for secure database and caching operations.
+- Deploy **RDS** and **ElastiCache (Redis)** in **private subnets** for secure database and caching operations.
+- Configure the backend services to work seamlessly with the frontend.
 
 
 ## CI/CD Process
@@ -174,7 +175,7 @@ Setting up a CI/CD pipeline is essential for automating the build, test, and dep
    - Add automated tests to validate the backend and frontend components.
 
 5. **Deployment**:
-   - Deploy the backend and frontend to AWS ECS instances as defined in the pipeline.
+   - Deploy the backend and frontend to AWS ECS instances.
 
 
 ## Final Thoughts
