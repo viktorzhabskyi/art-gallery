@@ -137,7 +137,7 @@ In the first step, deploy the frontend application with a simple setup:
 
 - Launch an ECS cluster in a **private subnet** for hosting the frontend service.
 - Use **Amazon ECR** for managing container images.
-- Upload the docker-compose.yml file to the ECS instances to define services and pull images from ECR.
+- Run the ECS task with the proper image.
 
 ### Step 2: Introducing Load Balancing
 
