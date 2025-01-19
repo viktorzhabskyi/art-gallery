@@ -1,5 +1,3 @@
-<!-- frontend/templates/index.html -->
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -9,7 +7,6 @@
     <style>
       body {
         font-family: consolas;
-        /* background-color: #f4f4f9; */
         background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svgjs='http://svgjs.dev/svgjs' width='1440' height='1440' preserveAspectRatio='none' viewBox='0 0 1440 1440'%3e%3cg mask='url(%26quot%3b%23SvgjsMask1120%26quot%3b)' fill='none'%3e%3crect width='1440' height='1440' x='0' y='0' fill='rgba(21%2c 67%2c 96%2c 1)'%3e%3c/rect%3e%3cpath d='M0%2c676.715C127.534%2c675.811%2c242.379%2c612.914%2c351.928%2c547.61C464.788%2c480.333%2c614.717%2c421.907%2c642.777%2c293.547C671.517%2c162.077%2c517.937%2c60.945%2c486.944%2c-70.012C460.115%2c-183.374%2c543.084%2c-317.176%2c475.743%2c-412.234C408.576%2c-507.047%2c265.849%2c-494.202%2c157.221%2c-535.447C37.327%2c-580.969%2c-70.444%2c-693.742%2c-195.925%2c-667.258C-321.529%2c-640.748%2c-380.073%2c-499.159%2c-466.109%2c-403.886C-554.206%2c-306.331%2c-704.216%2c-233.034%2c-706.73%2c-101.612C-709.289%2c32.162%2c-541.348%2c100.443%2c-478.012%2c218.301C-420.648%2c325.046%2c-442.612%2c468.745%2c-355.149%2c552.622C-262.77%2c641.214%2c-127.991%2c677.622%2c0%2c676.715' fill='%23103247'%3e%3c/path%3e%3cpath d='M1440 2143.438C1569.619 2121.947 1614.789 1954.9360000000001 1723.651 1881.3690000000001 1828.665 1810.403 1990.3429999999998 1828.79 2061.157 1723.673 2132.785 1617.347 2129.563 1467.07 2083.295 1347.508 2039.873 1235.301 1899.4180000000001 1201.061 1822.967 1108.157 1743.478 1011.5609999999999 1742.6979999999999 848.262 1629.192 795.672 1516.083 743.265 1381.478 801.377 1266.914 850.522 1161.469 895.756 1085.887 981.658 1005.284 1063.316 918.92 1150.811 797.036 1223.353 778.88 1344.945 760.715 1466.594 859.631 1569.859 913.107 1680.624 965.296 1788.722 998.505 1907.43 1088.691 1986.6480000000001 1187.029 2073.026 1310.876 2164.8469999999998 1440 2143.438' fill='%231b5479'%3e%3c/path%3e%3c/g%3e%3cdefs%3e%3cmask id='SvgjsMask1120'%3e%3crect width='1440' height='1440' fill='white'%3e%3c/rect%3e%3c/mask%3e%3c/defs%3e%3c/svg%3e");
         background-repeat: no-repeat;
         background-size: cover;
@@ -48,7 +45,7 @@
         width: 80%;
         border-radius: 8px;
         padding: 10px;
-        border: 1px, solid #7a7a7a;
+        border: 1px solid #7a7a7a;
       }
 
       button {
@@ -70,10 +67,11 @@
         width: 16px;
         height: 16px;
         border: 3px solid #ccc;
-        border-top: 3px solid #0a4483;
+        border-top: 3px solid #28a745;
         border-radius: 50%;
         animation: spin 1s linear infinite;
       }
+
       @keyframes spin {
         from {
           transform: rotate(0deg);
@@ -104,22 +102,12 @@
 
       <!-- RDS -->
       <div class="test-section">
-        <div class="input-block">
-          <div class="loading" id="rdsLoading"></div>
-          <label for="rds-url">RDS URL:</label>
-          <input type="text" id="rds-url" placeholder="Enter RDS URL" />
-        </div>
         <button id="test-rds-btn">Test RDS Connection</button>
         <p id="rds-result"></p>
       </div>
 
       <!-- Redis -->
       <div class="test-section">
-        <div class="input-block">
-          <div class="loading" id="redisLoading"></div>
-          <label for="redis-url">Redis URL:</label>
-          <input type="text" id="redis-url" placeholder="Enter Redis URL" />
-        </div>
         <button id="test-redis-btn">Test Redis Connection</button>
         <p id="redis-result"></p>
       </div>
@@ -127,31 +115,26 @@
 
     <script>
       function showLoaderRDS() {
-        document.getElementById("rdsLoading").style.display = "block";
-      }
-      function showLoaderRedis() {
-        document.getElementById("redisLoading").style.display = "block";
+        const rdsResult = document.getElementById("rds-result");
+        rdsResult.innerHTML = '<div class="loading"></div> Testing RDS connection...';
       }
 
-      function hideLoader() {
-        document.getElementById("redisLoading").style.display = "none";
-        document.getElementById("rdsLoading").style.display = "none";
+      function showLoaderRedis() {
+        const redisResult = document.getElementById("redis-result");
+        redisResult.innerHTML = '<div class="loading"></div> Testing Redis connection...';
       }
+
+      function hideLoader(resultElement) {
+        resultElement.innerHTML = "";
+      }
+
       const rdsResult = document.getElementById("rds-result");
       const redisResult = document.getElementById("redis-result");
 
-      hideLoader();
-
       // RDS Button Click
       document.getElementById("test-rds-btn").addEventListener("click", () => {
-        const rdsUrl = document.getElementById("rds-url").value.trim();
-        if (!rdsUrl) {
-          rdsResult.textContent = "Please enter a valid RDS URL.";
-          rdsResult.style.color = "red";
-          return;
-        }
+        const rdsUrl = "/test_rds/";
         showLoaderRDS();
-        rdsResult.textContent = "Testing RDS connection...";
         fetch(rdsUrl)
           .then((response) => {
             if (!response.ok) {
@@ -160,57 +143,35 @@
             return response.json();
           })
           .then((data) => {
-            rdsResult.textContent = `RDS Response: ${JSON.stringify(
-              data,
-              null,
-              2
-            )}`;
+            rdsResult.textContent = `RDS Response: ${JSON.stringify(data, null, 2)}`;
             rdsResult.style.color = "green";
           })
           .catch((error) => {
             rdsResult.textContent = `Error: ${error.message}`;
             rdsResult.style.color = "red";
-          })
-          .finally(() => {
-            hideLoader();
           });
       });
 
       // Redis Button Click
-      document
-        .getElementById("test-redis-btn")
-        .addEventListener("click", () => {
-          const redisUrl = document.getElementById("redis-url").value.trim();
-          if (!redisUrl) {
-            redisResult.textContent = "Please enter a valid Redis URL.";
+      document.getElementById("test-redis-btn").addEventListener("click", () => {
+        const redisUrl = "/test_redis/";
+        showLoaderRedis();
+        fetch(redisUrl)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`HTTP Error: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then((data) => {
+            redisResult.textContent = `Redis Response: ${JSON.stringify(data, null, 2)}`;
+            redisResult.style.color = "green";
+          })
+          .catch((error) => {
+            redisResult.textContent = `Error: ${error.message}`;
             redisResult.style.color = "red";
-            return;
-          }
-          showLoaderRedis();
-          redisResult.textContent = "Testing Redis connection...";
-          fetch(redisUrl)
-            .then((response) => {
-              if (!response.ok) {
-                throw new Error(`HTTP Error: ${response.status}`);
-              }
-              return response.json();
-            })
-            .then((data) => {
-              redisResult.textContent = `Redis Response: ${JSON.stringify(
-                data,
-                null,
-                2
-              )}`;
-              redisResult.style.color = "green";
-            })
-            .catch((error) => {
-              redisResult.textContent = `Error: ${error.message}`;
-              redisResult.style.color = "red";
-            })
-            .finally(() => {
-              hideLoader();
-            });
-        });
+          });
+      });
     </script>
   </body>
 </html>

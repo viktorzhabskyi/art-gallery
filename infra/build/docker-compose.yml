@@ -1,0 +1,71 @@
+version: '3.8'
+services:
+  # Backend Redis service
+  backend_redis:
+    image: 638693734667.dkr.ecr.us-east-1.amazonaws.com/bookstore:backend_redis-0395dab-linux-amd64
+    container_name: backend-redis
+    environment:
+      SECRET_KEY: "SECRET_KEY"
+      CORS_ALLOWED_ORIGINS: "http://localhost:8000,http://localhost"
+      DEBUG: "true"
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_DB: 0
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+    depends_on:
+      - redis
+    networks:
+      - backend_network
+    ports:
+      - "8002:8000"
+  backend_rds:
+    image: 638693734667.dkr.ecr.us-east-1.amazonaws.com/bookstore:backend_rds-0395dab-linux-amd64
+    container_name: backend-rds
+    depends_on:
+      - postgres
+    environment:
+      CORS_ALLOWED_ORIGINS: "http://localhost:8000,http://localhost"
+      DB_NAME: postgres
+      DB_USER: root
+      DB_PASSWORD: 123
+      DB_HOST: postgres
+      DB_PORT: 5432
+    networks:
+      - backend_network
+    ports:
+      - "8001:8000"
+  frontend:
+    image: 638693734667.dkr.ecr.us-east-1.amazonaws.com/bookstore:frontend-0395dab-linux-amd64
+    container_name: frontend
+    environment:
+      BACKEND_REDIS_URL: "http://backend-redis:8002/test_connection/"
+      BACKEND_RDS_URL: "http://backend-rds:8001/test_connection/"
+    networks:
+      - backend_network
+    ports:
+      - "8000:8000"
+  redis:
+    image: redis:7.4.2
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - backend_network
+  postgres:
+    image: postgres
+    container_name: postgres
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 123
+    ports:
+      - "5432:5432"
+    networks:
+      - backend_network
+
+networks:
+  backend_network:
+    driver: bridge
+volumes:
+  redis_data:
+  postgres_data:
