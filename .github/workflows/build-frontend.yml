@@ -1,7 +1,7 @@
 name: Build and Push backend_rds
 
 on:
-  workflow_run:
+  workflow_call:
     workflows: ["Build and Push Services"]
     types:
       - completed
