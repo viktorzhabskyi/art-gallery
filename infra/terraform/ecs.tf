@@ -66,23 +66,23 @@ resource "aws_ecs_task_definition" "ecs_task_rds" {
       environment = [
         {
           name  = "DB_NAME"
-          value = jsondecode(aws_secretsmanager_secret_version.db_secret_version_2.secret_string)["db_name"]
+          value = var.db_name
         },
         {
           name  = "DB_USER"
-          value = jsondecode(aws_secretsmanager_secret_version.db_secret_version_2.secret_string)["username"]
+          value = var.db_username
         },
         {
           name  = "DB_PASSWORD"
-          value = jsondecode(aws_secretsmanager_secret_version.db_secret_version_2.secret_string)["password"]
+          value = var.db_password
         },
         {
           name  = "DB_PORT"
-          value = tostring(jsondecode(aws_secretsmanager_secret_version.db_secret_version_2.secret_string)["port"])
+          value = tostring(var.db_port)
         },
         {
           name  = "DB_HOST"
-          value = jsondecode(aws_secretsmanager_secret_version.db_secret_version_2.secret_string)["host"]
+          value = aws_db_instance.postgres.endpoint
         }
       ]
     }

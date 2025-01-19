@@ -27,18 +27,18 @@ resource "aws_db_subnet_group" "db_subnet" {
 }
 
 # Store database credentials in AWS Secrets Manager
-resource "aws_secretsmanager_secret" "db_secret_2" {
-  name        = "ecs-postgres-credentials-2"
-  description = "PostgreSQL credentials for ECS services"
-}
-
-resource "aws_secretsmanager_secret_version" "db_secret_version_2" {
-  secret_id     = aws_secretsmanager_secret.db_secret_2.id
-  secret_string = jsonencode({
-    username = var.db_username
-    password = var.db_password
-    host     = aws_db_instance.postgres.endpoint
-    port     = var.db_port
-    db_name  = var.db_name
-  })
-}
+#resource "aws_secretsmanager_secret" "db_secret_2" {
+#  name        = "ecs-postgres-credentials-2"
+#  description = "PostgreSQL credentials for ECS services"
+#}
+#
+#resource "aws_secretsmanager_secret_version" "db_secret_version_2" {
+#  secret_id     = aws_secretsmanager_secret.db_secret_2.id
+#  secret_string = jsonencode({
+#    username = var.db_username
+#    password = var.db_password
+#    host     = aws_db_instance.postgres.endpoint
+#    port     = var.db_port
+#    db_name  = var.db_name
+#  })
+#}
