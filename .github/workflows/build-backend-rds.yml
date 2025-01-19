@@ -1,0 +1,36 @@
+name: Build and Push backend_rds
+
+on:
+  workflow_run:
+    workflows: ["Build and Push Services"]
+    types:
+      - completed
+
+jobs:
+  build-backend-rds:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up AWS CLI
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Log in to Amazon ECR
+        id: ecr-login
+        run: |
+          aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 638693734667.dkr.ecr.us-east-1.amazonaws.com
+
+      - name: Install Make
+        run: sudo apt-get install make
+
+
+      - name: Build and push backend_rds
+        run: |
+          make image TARGET_FOLDER=backend_rds
+          make push TARGET_FOLDER=backend_rds

@@ -1,0 +1,56 @@
+name: Deploy changed services to prod
+
+on:
+  push:
+    branches:
+      - mains
+    paths:
+      - 'backend_rds/**'
+      - 'backend_redis/**'
+      - 'frontend/**'
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      backend_rds: ${{ steps.changes.outputs.backend_rds }}
+      backend_redis: ${{ steps.changes.outputs.backend_redis }}
+      frontend: ${{ steps.changes.outputs.frontend }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Filter changes
+        uses: dorny/paths-filter@v2
+        id: changes
+        with:
+          filters: |
+            backend_rds:
+              - 'backend_rds/**'
+            backend_redis:
+              - 'backend_redis/**'
+            frontend:
+              - 'frontend/**'
+
+  build-backend-rds:
+    needs: setup
+    if: ${{ needs.setup.outputs.backend_rds_changed == 'true' }}
+    uses: ./.github/workflows/build-backend-rds.yml
+  build-backend-redis:
+    needs: setup
+    if: ${{ needs.setup.outputs.backend_redis_changed == 'true' }}
+    uses: ./.github/workflows/build-backend-redis.yml
+
+  build-frontend:
+    needs: setup
+    if: ${{ needs.setup.outputs.frontend_changed == 'true' }}
+    uses: ./.github/workflows/build-frontend.yml
+
+  # Деплой
+  deploy:
+    needs:
+      - build-backend-rds
+      - build-backend-redis
+      - build-frontend
+    uses: ./.github/workflows/deploy.yml

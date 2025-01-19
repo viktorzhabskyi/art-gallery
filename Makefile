@@ -27,6 +27,14 @@ docker-login:
 push: docker-login
 	docker push $(TAG)
 
+tag:
+	@echo $(TAG)
+
+bunch-push: docker-login
+	docker push ${REGISTRY}/${APP}:backend_rds-${VERSION}-$(TARGET_OS)-${TARGET_ARCH}
+	docker push ${REGISTRY}/${APP}:backend_redis-${VERSION}-$(TARGET_OS)-${TARGET_ARCH}
+	docker push ${REGISTRY}/${APP}:frontend-${VERSION}-$(TARGET_OS)-${TARGET_ARCH}
+
 clean:
 	docker images | grep "bookstore" | awk '{print $3}' | xargs -r docker rmi -f
 
