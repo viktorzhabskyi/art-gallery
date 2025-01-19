@@ -8,26 +8,7 @@ resource "aws_lb" "alb" {
   enable_deletion_protection = false
 }
 
-# Security Group для ALB
-resource "aws_security_group" "alb_sg" {
-  name        = "alb-sg"
-  description = "Allow HTTP traffic to ALB"
-  vpc_id      = aws_vpc.art_gallery.id
 
-  ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-}
 
 resource "aws_lb_target_group" "alb_target_group_rds" {
   name     = "art-gallery-rds"
@@ -97,11 +78,11 @@ resource "aws_lb_listener" "alb_listener" {
 
 resource "aws_lb_listener_rule" "frontend" {
   listener_arn = aws_lb_listener.alb_listener.arn
-  priority     = 10
+  priority     = 30
 
   condition {
     path_pattern {
-      values = ["/*"]
+      values = ["/"]
     }
   }
 
@@ -113,7 +94,7 @@ resource "aws_lb_listener_rule" "frontend" {
 
 resource "aws_lb_listener_rule" "rds" {
   listener_arn = aws_lb_listener.alb_listener.arn
-  priority     = 20
+  priority     = 10
 
   condition {
     path_pattern {
@@ -129,7 +110,7 @@ resource "aws_lb_listener_rule" "rds" {
 
 resource "aws_lb_listener_rule" "redis" {
   listener_arn = aws_lb_listener.alb_listener.arn
-  priority     = 30
+  priority     = 20
 
   condition {
     path_pattern {

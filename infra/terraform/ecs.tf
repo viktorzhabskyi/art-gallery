@@ -16,7 +16,7 @@ resource "aws_ecs_task_definition" "ecs_task_frontend" {
   container_definitions = jsonencode([
     {
       name      = "frontend"
-      image     = "638693734667.dkr.ecr.us-east-1.amazonaws.com/art-gallery:frontend-4cac2e9-linux-amd64"
+      image     = "638693734667.dkr.ecr.us-east-1.amazonaws.com/art-gallery:frontend-092f4bc-linux-amd64"
       essential = true
       portMappings = [
         {
@@ -27,11 +27,11 @@ resource "aws_ecs_task_definition" "ecs_task_frontend" {
       environment = [
         {
           name  = "BACKEND_REDIS_URL"
-          value = "${aws_lb.alb.dns_name}/redis/"
+          value = "${aws_lb.alb.dns_name}:8002/test_connection/"
         },
         {
           name  = "BACKEND_RDS_URL"
-          value = "${aws_lb.alb.dns_name}/rds/"
+          value = "${aws_lb.alb.dns_name}:8001/test_connection/"
         }
       ]
     }
@@ -55,11 +55,11 @@ resource "aws_ecs_task_definition" "ecs_task_rds" {
   container_definitions = jsonencode([
     {
       name      = "backend_rds"
-      image     = "638693734667.dkr.ecr.us-east-1.amazonaws.com/art-gallery:backend_rds-4cac2e9-linux-amd64"
+      image     = "638693734667.dkr.ecr.us-east-1.amazonaws.com/art-gallery:backend_rds-092f4bc-linux-amd64"
       essential = true
       portMappings = [
         {
-          containerPort = 8001
+          containerPort = 8000
           hostPort      = 8001
         }
       ]
@@ -105,11 +105,11 @@ resource "aws_ecs_task_definition" "ecs_task_redis" {
   container_definitions = jsonencode([
     {
       name      = "backend_redis"
-      image     = "638693734667.dkr.ecr.us-east-1.amazonaws.com/art-gallery:backend_redis-4cac2e9-linux-amd64"
+      image     = "638693734667.dkr.ecr.us-east-1.amazonaws.com/art-gallery:backend_redis-092f4bc-linux-amd64"
       essential = true
       portMappings = [
         {
-          containerPort = 8002
+          containerPort = 8000
           hostPort      = 8002
         }
       ]
@@ -203,23 +203,3 @@ resource "aws_ecs_service" "ecs_service_redis" {
   }
 }
 
-# Security Group для ECS
-resource "aws_security_group" "ecs_sg" {
-  name        = "ecs-sg"
-  description = "Allow ECS traffic"
-  vpc_id      = aws_vpc.art_gallery.id
-
-  ingress {
-    from_port   = 8000
-    to_port     = 8002
-    protocol    = "tcp"
-    cidr_blocks = [aws_vpc.art_gallery.cidr_block]
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-}

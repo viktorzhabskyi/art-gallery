@@ -1,31 +1,4 @@
 
-# Security Group for RDS and ElasticCache
-resource "aws_security_group" "db_sg" {
-  name        = "db-sg"
-  description = "Allow ECS to connect to RDS and Redis"
-  vpc_id      = aws_vpc.art_gallery.id
-
-  ingress {
-    from_port   = 5432
-    to_port     = 5432
-    protocol    = "tcp"
-    cidr_blocks = ["10.0.0.0/16"]
-  }
-
-  ingress {
-    from_port   = 6379
-    to_port     = 6379
-    protocol    = "tcp"
-    cidr_blocks = ["10.0.0.0/16"]
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-}
 
 
 # Create ElasticCache Redis Cluster

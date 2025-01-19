@@ -13,7 +13,7 @@ resource "aws_iam_policy" "ecr_access_policy" {
           "ecr:PutImage",
           "ecr:BatchGetImage"
         ]
-        Resource = "arn:aws:ecr:us-east-1:638693734667:repository/art-gallery"
+        Resource = "*"
       }
     ]
   })
