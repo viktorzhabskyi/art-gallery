@@ -3,7 +3,7 @@ name: Deploy changed services to prod
 on:
   push:
     branches:
-      - mains
+      - main
     paths:
       - 'backend_rds/**'
       - 'backend_redis/**'
