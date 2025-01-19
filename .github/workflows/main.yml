@@ -46,11 +46,3 @@ jobs:
     needs: setup
     if: ${{ needs.setup.outputs.frontend_changed == 'true' }}
     uses: ./.github/workflows/build-frontend.yml
-
-  # Деплой
-  deploy:
-    needs:
-      - build-backend-rds
-      - build-backend-redis
-      - build-frontend
-    uses: ./.github/workflows/deploy.yml
