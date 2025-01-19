@@ -12,14 +12,14 @@ resource "aws_lb" "alb" {
 
 resource "aws_lb_target_group" "alb_target_group_rds" {
   name     = "art-gallery-rds"
-  port     = 8001
+  port     = 8000
   protocol = "HTTP"
   vpc_id   = aws_vpc.art_gallery.id
   target_type = "ip"
 
   health_check {
     protocol = "HTTP"
-    path     = "/test_connection"
+    path     = "/rds/test_connection/"
     interval = 30
     timeout  = 5
     healthy_threshold = 2
@@ -29,14 +29,14 @@ resource "aws_lb_target_group" "alb_target_group_rds" {
 
 resource "aws_lb_target_group" "alb_target_group_redis" {
   name     = "art-gallery-redis"
-  port     = 8002
+  port     = 8000
   protocol = "HTTP"
   vpc_id   = aws_vpc.art_gallery.id
   target_type = "ip"
 
   health_check {
     protocol = "HTTP"
-    path     = "/test_connection"
+    path     = "/redis/test_connection/"
     interval = 30
     timeout  = 5
     healthy_threshold = 2
@@ -82,7 +82,7 @@ resource "aws_lb_listener_rule" "frontend" {
 
   condition {
     path_pattern {
-      values = ["/"]
+      values = ["/*"]
     }
   }
 

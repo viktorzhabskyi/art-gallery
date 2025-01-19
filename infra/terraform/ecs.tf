@@ -16,7 +16,7 @@ resource "aws_ecs_task_definition" "ecs_task_frontend" {
   container_definitions = jsonencode([
     {
       name      = "frontend"
-      image     = "638693734667.dkr.ecr.us-east-1.amazonaws.com/art-gallery:frontend-092f4bc-linux-amd64"
+      image     = "638693734667.dkr.ecr.us-east-1.amazonaws.com/art-gallery:frontend-0343a0c-linux-amd64"
       essential = true
       portMappings = [
         {
@@ -27,11 +27,11 @@ resource "aws_ecs_task_definition" "ecs_task_frontend" {
       environment = [
         {
           name  = "BACKEND_REDIS_URL"
-          value = "${aws_lb.alb.dns_name}:8002/test_connection/"
+          value = "http://${aws_lb.alb.dns_name}/redis/test_connection/"
         },
         {
           name  = "BACKEND_RDS_URL"
-          value = "${aws_lb.alb.dns_name}:8001/test_connection/"
+          value = "http://${aws_lb.alb.dns_name}/rds/test_connection/"
         }
       ]
     }
@@ -55,12 +55,12 @@ resource "aws_ecs_task_definition" "ecs_task_rds" {
   container_definitions = jsonencode([
     {
       name      = "backend_rds"
-      image     = "638693734667.dkr.ecr.us-east-1.amazonaws.com/art-gallery:backend_rds-092f4bc-linux-amd64"
+      image     = "638693734667.dkr.ecr.us-east-1.amazonaws.com/art-gallery:backend_rds-0343a0c-linux-amd64"
       essential = true
       portMappings = [
         {
           containerPort = 8000
-          hostPort      = 8001
+          hostPort      = 8000
         }
       ]
       environment = [
@@ -82,7 +82,7 @@ resource "aws_ecs_task_definition" "ecs_task_rds" {
         },
         {
           name  = "DB_HOST"
-          value = aws_db_instance.postgres.endpoint
+          value = aws_db_instance.postgres.address
         }
       ]
     }
@@ -105,12 +105,12 @@ resource "aws_ecs_task_definition" "ecs_task_redis" {
   container_definitions = jsonencode([
     {
       name      = "backend_redis"
-      image     = "638693734667.dkr.ecr.us-east-1.amazonaws.com/art-gallery:backend_redis-092f4bc-linux-amd64"
+      image     = "638693734667.dkr.ecr.us-east-1.amazonaws.com/art-gallery:backend_redis-0343a0c-linux-amd64"
       essential = true
       portMappings = [
         {
           containerPort = 8000
-          hostPort      = 8002
+          hostPort      = 8000
         }
       ]
       environment = [
@@ -141,7 +141,7 @@ resource "aws_ecs_task_definition" "ecs_task_redis" {
 
 # ECS Services
 resource "aws_ecs_service" "ecs_service_frontend" {
-  name            = "art_gallery_ecs_service_frontend"
+  name            = "ecs_service_frontend"
   cluster         = aws_ecs_cluster.art_gallery_ecs_cluster.id
   task_definition = aws_ecs_task_definition.ecs_task_frontend.arn
   desired_count   = 1
@@ -162,7 +162,7 @@ resource "aws_ecs_service" "ecs_service_frontend" {
 }
 
 resource "aws_ecs_service" "ecs_service_rds" {
-  name            = "ecs-service-8001"
+  name            = "ecs_service_rds"
   cluster         = aws_ecs_cluster.art_gallery_ecs_cluster.id
   task_definition = aws_ecs_task_definition.ecs_task_rds.arn
   desired_count   = 1
@@ -178,12 +178,12 @@ resource "aws_ecs_service" "ecs_service_rds" {
   load_balancer {
     target_group_arn = aws_lb_target_group.alb_target_group_rds.arn
     container_name   = "backend_rds"
-    container_port   = 8001
+    container_port   = 8000
   }
 }
 
 resource "aws_ecs_service" "ecs_service_redis" {
-  name            = "ecs-service-8002"
+  name            = "ecs_service_redis"
   cluster         = aws_ecs_cluster.art_gallery_ecs_cluster.id
   task_definition = aws_ecs_task_definition.ecs_task_redis.arn
   desired_count   = 1
@@ -199,7 +199,7 @@ resource "aws_ecs_service" "ecs_service_redis" {
   load_balancer {
     target_group_arn = aws_lb_target_group.alb_target_group_redis.arn
     container_name   = "backend_redis"
-    container_port   = 8002
+    container_port   = 8000
   }
 }
 
