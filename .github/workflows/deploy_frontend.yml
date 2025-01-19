@@ -1,10 +1,8 @@
 name: Deploy to EC2 with new Docker images
 
 on:
-  workflow_run:
+  workflow_call:
     workflows: ["Deploy Services"]
-    types:
-      - completed
 
 jobs:
   deploy-backend-rds:
