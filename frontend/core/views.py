@@ -9,6 +9,7 @@ logger = logging.getLogger(__name__)
 def index(request):
     return render(request, 'index.html')
 
+
 def test_rds(request):
     try:
         response = requests.get(settings.BACKEND_RDS_URL)
