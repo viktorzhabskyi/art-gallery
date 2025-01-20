@@ -24,7 +24,7 @@ jobs:
         run: |
           TAG=$(make tag TARGET_FOLDER=backend_rds)
           aws ecs update-service \
-            --cluster my-cluster \
-            --service my-service \
+            --cluster art_gallery_ecs_cluster \
+            --service ecs_service_rds \
             --force-new-deployment \
             --image "$TAG"
