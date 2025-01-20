@@ -9,7 +9,7 @@ on:
         required: true
 
 jobs:
-  build-backend-rds:
+  build-backend-redis:
     runs-on: ubuntu-latest
 
     steps:
