@@ -4,10 +4,10 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'backend_rds/**'
-      - 'backend_redis/**'
-      - 'frontend/**'
+#    paths:
+#      - 'backend_rds/**'
+#      - 'backend_redis/**'
+#      - 'frontend/**'
 
 jobs:
   setup:
@@ -35,7 +35,7 @@ jobs:
 
   build-backend-rds:
     needs: setup
-    if: ${{ needs.setup.outputs.backend_rds == 'true' }}
+#    if: ${{ needs.setup.outputs.backend_rds == 'true' }}
     uses: ./.github/workflows/build-backend-rds.yml
     secrets: inherit
 
