@@ -39,7 +39,7 @@ jobs:
     uses: ./.github/workflows/build-backend-rds.yml
     secrets: inherit
     with:
-      MY_ECS_TASK_DEFINITION_RDS: ${{ MY_ECS_TASK_DEFINITION_RDS }}
+      MY_ECS_TASK_DEFINITION_RDS: $MY_ECS_TASK_DEFINITION_RDS
 
   build-backend-redis:
     needs: setup
