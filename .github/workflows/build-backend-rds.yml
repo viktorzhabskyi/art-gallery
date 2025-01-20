@@ -26,7 +26,6 @@ jobs:
       - name: Install Make
         run: sudo apt-get install make
 
-
       - name: Build and push backend_rds
         run: |
           make image TARGET_FOLDER=backend_rds
