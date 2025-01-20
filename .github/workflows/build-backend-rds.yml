@@ -44,6 +44,4 @@ jobs:
   deploy-backend-rds:
     needs: build-backend-rds
     uses: ./.github/workflows/deploy_rds.yml
-    with:
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    secrets: inherit
