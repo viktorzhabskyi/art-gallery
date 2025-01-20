@@ -22,7 +22,7 @@ builds:
 	$(MAKE) image TARGET_FOLDER=frontend
 
 docker-login:
-	aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 638693734667.dkr.ecr.us-east-1.amazonaws.com
+	aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $(REGISTRY)
 
 push: docker-login
 	docker push $(TAG)

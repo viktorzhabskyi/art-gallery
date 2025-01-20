@@ -16,7 +16,7 @@ resource "aws_ecs_task_definition" "ecs_task_frontend" {
   container_definitions = jsonencode([
     {
       name      = "frontend"
-      image     = "638693734667.dkr.ecr.us-east-1.amazonaws.com/art-gallery:frontend-0343a0c-linux-amd64"
+      image     = "638693734667.dkr.ecr.us-east-1.amazonaws.com/art-gallery:frontend-2221275-linux-amd64"
       essential = true
       portMappings = [
         {
@@ -55,7 +55,7 @@ resource "aws_ecs_task_definition" "ecs_task_rds" {
   container_definitions = jsonencode([
     {
       name      = "backend_rds"
-      image     = "638693734667.dkr.ecr.us-east-1.amazonaws.com/art-gallery:backend_rds-0343a0c-linux-amd64"
+      image     = "638693734667.dkr.ecr.us-east-1.amazonaws.com/art-gallery:backend_rds-2221275-linux-amd64"
       essential = true
       portMappings = [
         {
@@ -105,7 +105,7 @@ resource "aws_ecs_task_definition" "ecs_task_redis" {
   container_definitions = jsonencode([
     {
       name      = "backend_redis"
-      image     = "638693734667.dkr.ecr.us-east-1.amazonaws.com/art-gallery:backend_redis-0343a0c-linux-amd64"
+      image     = "638693734667.dkr.ecr.us-east-1.amazonaws.com/art-gallery:backend_redis-2221275-linux-amd64"
       essential = true
       portMappings = [
         {
