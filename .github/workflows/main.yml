@@ -34,7 +34,7 @@ jobs:
               - 'frontend/**'
 
   build-backend-rds:
-#    needs: setup
+    needs: setup
 #    if: ${{ needs.setup.outputs.backend_rds == 'true' }}
     uses: ./.github/workflows/build-backend-rds.yml
   build-backend-redis:
