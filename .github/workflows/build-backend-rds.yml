@@ -2,6 +2,10 @@ name: Build and Push backend_rds
 
 on:
   workflow_call:
+    inputs:
+      MY_ECS_TASK_DEFINITION_RDS:
+        required: true
+        type: string
     secrets:
       AWS_ACCESS_KEY_ID:
         required: true
@@ -40,3 +44,5 @@ jobs:
     needs: build-backend-rds
     uses: ./.github/workflows/deploy_rds.yml
     secrets: inherit
+    with:
+      MY_ECS_TASK_DEFINITION_RDS: ${{ env.MY_ECS_TASK_DEFINITION_RDS }}
