@@ -4,10 +4,10 @@ on:
   push:
     branches:
       - main
-#    paths:
-#      - 'backend_rds/**'
-#      - 'backend_redis/**'
-#      - 'frontend/**'
+    paths:
+      - 'backend_rds/**'
+      - 'backend_redis/**'
+      - 'frontend/**'
 
 jobs:
   setup:
