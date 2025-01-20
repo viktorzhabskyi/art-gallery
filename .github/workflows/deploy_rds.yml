@@ -20,6 +20,9 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
+      - name: Install Make
+        run: sudo apt-get install make
+
       - name: Update ECS service with new image
         run: |
           TAG=$(make tag TARGET_FOLDER=backend_rds)
