@@ -2,7 +2,11 @@ name: Deploy to EC2 with new Docker images
 
 on:
   workflow_call:
-    workflows: ["Deploy Services"]
+    secrets:
+      AWS_ACCESS_KEY_ID:
+        required: true
+      AWS_SECRET_ACCESS_KEY:
+        required: true
 
 jobs:
   deploy-backend-rds:

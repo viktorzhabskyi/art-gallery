@@ -2,11 +2,11 @@ name: Build and Push backend_rds
 
 on:
   workflow_call:
-#    secrets:
-#      AWS_ACCESS_KEY_ID:
-#        required: true
-#      AWS_SECRET_ACCESS_KEY:
-#        required: true
+    secrets:
+      AWS_ACCESS_KEY_ID:
+        required: true
+      AWS_SECRET_ACCESS_KEY:
+        required: true
 
 jobs:
   build-backend-rds:
@@ -40,3 +40,10 @@ jobs:
         run: |
           make image TARGET_FOLDER=backend_rds
           make push TARGET_FOLDER=backend_rds
+
+  deploy-backend-rds:
+    needs: build-backend-rds
+    uses: ./.github/workflows/deploy_rds.yml
+    with:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
