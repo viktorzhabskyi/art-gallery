@@ -1,4 +1,4 @@
-name: Deploy to EC2 with new Docker images
+name: Deploy RDS to ECS
 
 on:
   workflow_call:

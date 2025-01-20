@@ -1,7 +1,12 @@
-name: Build and Push backend_rds
+name: Build and Push redis
 
 on:
   workflow_call:
+    secrets:
+      AWS_ACCESS_KEY_ID:
+        required: true
+      AWS_SECRET_ACCESS_KEY:
+        required: true
 
 jobs:
   build-backend-rds:
@@ -30,3 +35,8 @@ jobs:
         run: |
           make image TARGET_FOLDER=backend_redis
           make push TARGET_FOLDER=backend_redis
+
+  deploy-backend-redis:
+    needs: build-backend-redis
+    uses: ./.github/workflows/deploy_redis.yml
+    secrets: inherit
