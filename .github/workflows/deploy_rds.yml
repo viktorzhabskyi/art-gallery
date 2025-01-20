@@ -11,8 +11,6 @@ on:
 jobs:
   deploy-backend-rds:
     runs-on: ubuntu-latest
-    needs:
-      - build-backend-rds
 
     steps:
       - name: Set up AWS CLI
