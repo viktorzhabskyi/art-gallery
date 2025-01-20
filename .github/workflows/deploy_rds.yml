@@ -23,11 +23,18 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
-      - name: Update ECS service with new image
-        run: |
-          TAG=$(make tag TARGET_FOLDER=backend_rds)
-          aws ecs update-service \
-            --cluster art_gallery_ecs_cluster \
-            --service ecs_service_rds \
-            --force-new-deployment \
-            --image "$TAG"
+      - name: Fill in the new image ID in the Amazon ECS task definition
+        id: task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@c804dfbdd57f713b6c079302a4c01db7017a36fc
+        with:
+          task-definition: ${{ env.MY_ECS_TASK_DEFINITION }}
+          container-name: backend_rds
+          image: $(make tag TARGET_FOLDER=backend_rds)
+
+      - name: Deploy Amazon ECS task definition
+        uses: aws-actions/amazon-ecs-deploy-task-definition@df9643053eda01f169e64a0e60233aacca83799a
+        with:
+          task-definition: ${{ steps.task-def.outputs.task-definition }}
+          service: ecs_service_rds
+          cluster: art_gallery_ecs_cluster
+          wait-for-service-stability: true
