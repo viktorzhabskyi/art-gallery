@@ -25,14 +25,13 @@ jobs:
 
       - name: Debug
         run: |
-          echo " $MY_ECS_TASK_DEFINITION_RDS"
-          echo "${{  MY_ECS_TASK_DEFINITION_RDS }}"
+          echo "${{ env.MY_ECS_TASK_DEFINITION_RDS }}"
 
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
         uses: aws-actions/amazon-ecs-render-task-definition@c804dfbdd57f713b6c079302a4c01db7017a36fc
         with:
-          task-definition: $MY_ECS_TASK_DEFINITION_RDS
+          task-definition: ${{ env.MY_ECS_TASK_DEFINITION_RDS }}
           container-name: backend_rds
           image: $(make tag TARGET_FOLDER=backend_rds)
 
