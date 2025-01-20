@@ -37,9 +37,7 @@ jobs:
     needs: setup
 #    if: ${{ needs.setup.outputs.backend_rds == 'true' }}
     uses: ./.github/workflows/build-backend-rds.yml
-    secrets:
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    secrets: inherit
   build-backend-redis:
     needs: setup
     if: ${{ needs.setup.outputs.backend_redis == 'true' }}
