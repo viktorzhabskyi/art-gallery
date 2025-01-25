@@ -62,13 +62,16 @@ jobs:
           | jq 'del(.compatibilities, .taskDefinitionArn, .requiresAttributes, .revision, .status, .registeredAt, .registeredBy, .enableFaultInjection)' \
           > task-definition.json
 
+      - name: Setup image name
+        run: echo "image=$(make tag TARGET_FOLDER=backend_rds)" >> $GITHUB_ENV
+
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
           task-definition: task-definition.json
           container-name: backend_rds
-          image: $(make tag TARGET_FOLDER=backend_rds)
+          image: ${{ env.image }}
 
       - name: Debug
         run: |
