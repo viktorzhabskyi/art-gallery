@@ -39,7 +39,6 @@ jobs:
         run: |
           make image TARGET_FOLDER=backend_rds
           make push TARGET_FOLDER=backend_rds
-          steps:
 
   deploy:
     runs-on: ubuntu-latest
