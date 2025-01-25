@@ -36,7 +36,7 @@ jobs:
   build-backend-rds:
     needs: setup
 #    if: ${{ needs.setup.outputs.backend_rds == 'true' }}
-    uses: ./.github/workflows/build-backend-rds.yml
+    uses: ./.github/workflows/build-and-deploy-backend-rds.yml
     secrets: inherit
     with:
       MY_ECS_TASK_DEFINITION_RDS: ${{ vars.MY_ECS_TASK_DEFINITION_RDS }}
