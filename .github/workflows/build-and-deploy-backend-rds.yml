@@ -58,7 +58,8 @@ jobs:
         run: |
           aws ecs describe-task-definition \
           --task-definition art_gallery_ecs_task_rds \
-          --query taskDefinition \
+          --query 'taskDefinition' \
+          | jq 'del(.compatibilities, .taskDefinitionArn, .requiresAttributes, .revision, .status, .registeredAt, .registeredBy, .enableFaultInjection)' \
           > task-definition.json
 
       - name: Debug
